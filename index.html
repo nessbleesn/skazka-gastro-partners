@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071b2d">
+  <meta name="description" content="Коммерческая web-презентация Парка «Сказка» для ресторанных операторов и гастрономических проектов.">
+  <link rel="canonical" href="https://nessbleesn.github.io/skazka-gastro-partners/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Парк «Сказка»">
+  <meta property="og:title" content="Новые аттракционы — новый трафик">
+  <meta property="og:description" content="Партнёрская программа Парка «Сказка» для ресторанных операторов и гастрономических проектов.">
+  <meta property="og:url" content="https://nessbleesn.github.io/skazka-gastro-partners/">
+  <meta property="og:image" content="https://nessbleesn.github.io/skazka-gastro-partners/assets/images/boomerang-hero-poster.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Новые аттракционы — новый трафик">
+  <meta name="twitter:description" content="Партнёрская программа Парка «Сказка» для гастрономических проектов.">
+  <meta name="twitter:image" content="https://nessbleesn.github.io/skazka-gastro-partners/assets/images/boomerang-hero-poster.jpg">
+  <title>Новые аттракционы — новый трафик | Парк «Сказка»</title>
+  <link rel="icon" href="assets/images/skazka-logo.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preload" href="assets/fonts/onest-regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/fonts/unbounded-700.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#numbers">Перейти к содержанию</a>
+
+  <header class="deck-header" aria-label="Навигация по презентации">
+    <a class="brand" href="#intro" aria-label="Парк Сказка — к первому экрану">
+      <span class="brand-mark"><img src="assets/images/skazka-logo.png" alt="Парк Сказка" width="125" height="42"></span>
+      <span class="brand-context">Партнёрская программа</span>
+    </a>
+
+    <nav class="chapter-nav" aria-label="Разделы презентации">
+      <button class="chapter-dot is-active" type="button" data-target="intro" aria-label="Возможность" aria-current="step"></button>
+      <button class="chapter-dot" type="button" data-target="numbers" aria-label="Парк в цифрах"></button>
+      <button class="chapter-dot" type="button" data-target="zone" aria-label="Карта зоны"></button>
+      <button class="chapter-dot" type="button" data-target="attractions" aria-label="Аттракционы"></button>
+      <button class="chapter-dot" type="button" data-target="offer" aria-label="Коммерческая модель"></button>
+      <button class="chapter-dot" type="button" data-target="support" aria-label="Поддержка парка"></button>
+      <button class="chapter-dot" type="button" data-target="join" aria-label="Стать партнёром"></button>
+    </nav>
+
+    <div class="deck-tools">
+      <span class="deck-counter" aria-live="polite"><strong id="current-slide">01</strong><span>/ 07</span></span>
+      <button class="icon-button" id="fullscreen-button" type="button" aria-label="Открыть на весь экран" title="На весь экран">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="deck" id="presentation">
+    <section class="slide slide--hero" id="intro" data-chapter="Возможность" aria-labelledby="intro-title">
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/images/boomerang-hero-poster.jpg" alt="">
+        <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/images/boomerang-hero-poster.jpg" tabindex="-1">
+          <source src="assets/video/boomerang-hero.webm" type="video/webm">
+          <source src="assets/video/boomerang-hero.mp4" type="video/mp4">
+        </video>
+        <div class="hero-wash"></div>
+      </div>
+      <svg class="route route--hero" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+        <path class="route-shadow" d="M-60 735 C 300 545, 440 815, 760 590 S 1190 230, 1660 395"/>
+        <path class="route-line" d="M-60 735 C 300 545, 440 815, 760 590 S 1190 230, 1660 395"/>
+        <circle cx="760" cy="590" r="9" class="route-point"/>
+      </svg>
+
+      <div class="slide-shell hero-shell">
+        <div class="hero-kicker reveal">
+          <span>Коммерческое предложение</span>
+          <span>Москва · Крылатское</span>
+        </div>
+
+        <div class="hero-copy">
+          <p class="overline reveal">Экстрим-зона · следующий сезон</p>
+          <h1 id="intro-title" class="hero-title reveal"><span>Новые аттракционы —</span><strong>новый трафик</strong></h1>
+          <p class="hero-lead reveal">Приглашаем ресторанные команды занять место в новой точке притяжения Парка «Сказка».</p>
+          <div class="hero-actions reveal">
+            <a class="button button--primary" href="#zone">Увидеть возможности</a>
+            <span class="hero-note"><i></i> Заявки на следующий сезон уже принимаются</span>
+          </div>
+        </div>
+
+        <div class="hero-foot reveal">
+          <span>Для ресторанных операторов</span>
+          <span>Локальных гастропроектов</span>
+          <span>Новых food-концепций</span>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#numbers" aria-label="Следующий экран"><span>Дальше</span><i></i></a>
+    </section>
+
+    <section class="slide slide--numbers" id="numbers" data-chapter="Парк в цифрах" aria-labelledby="numbers-title">
+      <div class="slide-shell">
+        <header class="section-heading reveal">
+          <p class="overline">Парк в цифрах</p>
+          <h2 id="numbers-title">Поток уже есть.<br><em>Новая зона его усиливает.</em></h2>
+          <p>Публичные факты показаны как подтверждённые. Внутренние показатели отмечены и меняются после согласования с аналитикой.</p>
+        </header>
+
+        <div class="numbers-layout">
+          <div class="metric-grid" id="metric-grid" aria-label="Ключевые показатели"></div>
+
+          <article class="season-card reveal" aria-labelledby="season-title">
+            <div class="season-card__head">
+              <div>
+                <span class="data-status data-status--draft">Рабочая модель</span>
+                <h3 id="season-title">Трафик в течение года</h3>
+              </div>
+              <p>Индекс посещаемости · заменить после выгрузки</p>
+            </div>
+            <div class="chart" id="season-chart" role="img" aria-label="Иллюстративный график сезонности по 12 месяцам"></div>
+            <div class="chart-legend"><span><i class="legend-line"></i> базовый поток</span><span><i class="legend-dot"></i> событийные пики</span></div>
+          </article>
+        </div>
+
+        <aside class="data-request reveal">
+          <span class="data-request__icon">↳</span>
+          <p><strong>Для финальной версии нужны:</strong> фактический трафик, прогноз прироста, средний чек и семейная доля.</p>
+          <button type="button" class="text-button" data-open-data>Список данных</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide slide--zone" id="zone" data-chapter="Карта зоны" aria-labelledby="zone-title">
+      <div class="slide-shell zone-shell">
+        <header class="section-heading section-heading--light reveal">
+          <p class="overline">Что открываем</p>
+          <h2 id="zone-title">Точки питания —<br><em>на пути гостя.</em></h2>
+          <p>Схема показывает принцип привязки к потокам. Точные границы и координаты фиксируются по утверждённому генплану.</p>
+        </header>
+
+        <div class="zone-map reveal" aria-label="Концептуальная схема новой экстрим-зоны">
+          <div class="map-topline">
+            <span class="data-status data-status--concept">Концептуальная схема</span>
+            <div class="map-legend"><span><i class="legend-attraction"></i>аттракцион</span><span><i class="legend-food"></i>точка питания</span><span><i class="legend-flow"></i>маршрут гостя</span></div>
+          </div>
+
+          <svg class="map-art" viewBox="0 0 1080 610" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">Схема размещения аттракционов и точек питания</title>
+            <desc id="map-desc">Поток движется от входа через аттракционы Вихрь, Бумеранг и Смерч. Три потенциальные точки питания располагаются у пересечений маршрутов.</desc>
+            <defs>
+              <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="rgba(255,255,255,.06)"/></pattern>
+              <filter id="glow"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect width="1080" height="610" rx="30" fill="url(#grid)"/>
+            <path class="map-terrain" d="M30 445c94-92 164-55 239-120 102-88 171-40 258-103 95-70 155-35 234-98 71-55 153-63 291-21v422H30z"/>
+            <path class="map-flow map-flow--ghost" d="M36 505 C180 474 153 367 284 357 S399 436 514 375 579 221 720 244 826 373 1044 211"/>
+            <path class="map-flow" d="M36 505 C180 474 153 367 284 357 S399 436 514 375 579 221 720 244 826 373 1044 211"/>
+            <path class="map-flow map-flow--branch" d="M514 375 C650 455 791 463 914 393"/>
+
+            <g class="map-entry" transform="translate(52 462)"><circle r="26"/><path d="M-8 0h16M3-5l5 5-5 5"/><text x="-18" y="49">Вход</text></g>
+
+            <g class="map-node map-node--ride" transform="translate(278 355)">
+              <circle r="46"/><circle r="33"/><path d="M-18 8c11-29 24-29 37 0M-16-8h32"/>
+              <text x="0" y="74">Вихрь</text><text class="map-node__num" x="0" y="94">01</text>
+            </g>
+            <g class="map-node map-node--ride" transform="translate(707 246)">
+              <circle r="58"/><circle r="42"/><path d="M-27 15c9-40 46-40 54 0M-25-3h50"/>
+              <text x="0" y="87">Бумеранг</text><text class="map-node__num" x="0" y="107">02</text>
+            </g>
+            <g class="map-node map-node--ride" transform="translate(924 393)">
+              <circle r="48"/><circle r="35"/><path d="M0-22v44M-22 0h44M-15-15l30 30M15-15l-30 30"/>
+              <text x="0" y="76">Смерч</text><text class="map-node__num" x="0" y="96">03</text>
+            </g>
+
+            <g class="map-node map-node--food" transform="translate(485 375)" tabindex="0" role="button" aria-label="Потенциальная точка F1, отдельный корнер">
+              <circle r="31"/><text x="0" y="7">F1</text><path d="M0 34v24"/>
+            </g>
+            <g class="map-node map-node--food" transform="translate(804 282)" tabindex="0" role="button" aria-label="Потенциальная точка F2, место в общем фуд-корте">
+              <circle r="31"/><text x="0" y="7">F2</text><path d="M0 34v24"/>
+            </g>
+            <g class="map-node map-node--food" transform="translate(694 444)" tabindex="0" role="button" aria-label="Потенциальная точка F3, отдельный корнер">
+              <circle r="31"/><text x="0" y="7">F3</text><path d="M0 34v24"/>
+            </g>
+          </svg>
+
+          <div class="map-opportunities">
+            <article><span>F1</span><div><strong>У первого распределения потока</strong><small>Для импульсных покупок</small></div></article>
+            <article><span>F2</span><div><strong>В центре новой зоны</strong><small>Максимальный контакт с трафиком</small></div></article>
+            <article><span>F3</span><div><strong>У посадочной зоны</strong><small>Для более длинного визита</small></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide--attractions" id="attractions" data-chapter="Аттракционы" aria-labelledby="attractions-title">
+      <div class="slide-shell">
+        <header class="section-heading reveal">
+          <p class="overline">Три магнита трафика</p>
+          <h2 id="attractions-title">Причина приехать.<br><em>И остаться дольше.</em></h2>
+          <p>Подтверждённые характеристики взяты с официального сайта Парка «Сказка». Пропускная способность добавляется из паспортов оборудования.</p>
+        </header>
+        <div class="ride-grid" id="ride-grid"></div>
+      </div>
+    </section>
+
+    <section class="slide slide--offer" id="offer" data-chapter="Коммерческая модель" aria-labelledby="offer-title">
+      <div class="slide-shell offer-shell">
+        <header class="section-heading section-heading--light reveal">
+          <p class="overline">Коммерческое предложение</p>
+          <h2 id="offer-title">Понятная модель.<br><em>Два формата входа.</em></h2>
+        </header>
+
+        <div class="offer-layout">
+          <article class="commercial-card reveal">
+            <div class="commercial-card__label">Предварительные условия</div>
+            <div class="commercial-formula"><strong>15%</strong><span>от товарооборота</span></div>
+            <div class="commercial-plus">+</div>
+            <div class="commercial-utilities"><strong>коммунальные платежи</strong><span>по фактическому потреблению</span></div>
+            <p>Финальные условия фиксируются после выбора локации и согласования концепции.</p>
+          </article>
+
+          <div class="format-stack reveal">
+            <article class="format-card">
+              <div class="format-card__number">01</div>
+              <div><span class="format-card__type">Автономный формат</span><h3>Отдельный food-корнер</h3><p>Собственная айдентика, витрина и меню в точке с выделенным потоком.</p></div>
+              <ul><li>До 15–17 кВт</li><li>Свой сценарий выдачи</li><li>Отдельная локация</li></ul>
+            </article>
+            <article class="format-card">
+              <div class="format-card__number">02</div>
+              <div><span class="format-card__type">Совместный формат</span><h3>Точка в общем фуд-корте</h3><p>Быстрый запуск в готовой гастрономической среде с общей посадкой.</p></div>
+              <ul><li>Общая посадка</li><li>Единый поток</li><li>Компактный запуск</li></ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide--support" id="support" data-chapter="Поддержка парка" aria-labelledby="support-title">
+      <div class="slide-shell">
+        <header class="section-heading reveal">
+          <p class="overline">Со стороны Парка</p>
+          <h2 id="support-title">Вы создаёте продукт.<br><em>Мы создаём поток.</em></h2>
+          <p>Инфраструктура и событийная программа сокращают путь от идеи до стабильной работы точки.</p>
+        </header>
+
+        <div class="support-grid">
+          <article class="support-card reveal"><span>01</span><div class="support-icon">⚡</div><h3>Мощности</h3><p>Электрические мощности до 15–17 кВт.</p></article>
+          <article class="support-card reveal"><span>02</span><div class="support-icon">▤</div><h3>Посадка</h3><p>Организованная общая зона для гостей.</p></article>
+          <article class="support-card reveal"><span>03</span><div class="support-icon">✦</div><h3>Эксплуатация</h3><p>Уборка общественных пространств.</p></article>
+          <article class="support-card reveal"><span>04</span><div class="support-icon">⌁</div><h3>IT-инфраструктура</h3><p>Необходимые сервисы для работы точки.</p></article>
+          <article class="support-card reveal"><span>05</span><div class="support-icon">◉</div><h3>Продвижение</h3><p>Маркетинговая поддержка на площадках Парка.</p></article>
+          <article class="support-card support-card--accent reveal"><span>06</span><div class="support-icon">↗</div><h3>Событийный трафик</h3><p>Шоу, фестивали и специальные мероприятия.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide--join" id="join" data-chapter="Стать партнёром" aria-labelledby="join-title">
+      <svg class="route route--join" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+        <path class="route-shadow" d="M-50 655 C260 410 380 775 685 530 S1030 235 1660 365"/>
+        <path class="route-line" d="M-50 655 C260 410 380 775 685 530 S1030 235 1660 365"/>
+      </svg>
+      <div class="slide-shell join-shell">
+        <div class="join-copy">
+          <p class="overline reveal">Старт партнёрства</p>
+          <h2 id="join-title" class="reveal">Займите точку<br><em>до открытия сезона.</em></h2>
+          <p class="join-lead reveal">Парк уже принимает заявки и фиксирует договорённости с партнёрами на следующий год.</p>
+
+          <ol class="steps reveal" aria-label="Этапы подключения">
+            <li><span>1</span>Заявка</li><li><span>2</span>Место</li><li><span>3</span>Концепция</li><li><span>4</span>Документы</li><li><span>5</span>Подготовка</li><li><span>6</span>Открытие</li>
+          </ol>
+
+          <div class="join-actions reveal">
+            <button class="button button--primary button--large" type="button" data-open-form>Подать заявку на размещение</button>
+            <a class="contact-link" href="mailto:info@parkskazka.com"><span>Или написать напрямую</span><strong>info@parkskazka.com</strong></a>
+          </div>
+        </div>
+
+        <aside class="join-panel reveal">
+          <span class="join-panel__eyebrow">Первый контакт</span>
+          <strong>Расскажите о концепции.<br>Мы подберём место.</strong>
+          <dl><div><dt>Телефон</dt><dd><a href="tel:+74951336556">+7 (495) 133-65-56</a></dd></div><div><dt>Адрес</dt><dd>Москва, ул. Крылатская, 18</dd></div></dl>
+          <small>До назначения персонального менеджера используется общий контакт Парка.</small>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="modal" id="application-modal" aria-labelledby="application-title">
+    <form class="application-form" id="application-form" method="dialog">
+      <button class="modal-close" type="button" data-close-modal aria-label="Закрыть">×</button>
+      <p class="overline">Заявка на размещение</p>
+      <h2 id="application-title">Давайте обсудим<br>вашу точку</h2>
+      <p class="modal-intro">Заполните короткую форму — заявка откроется в вашем почтовом приложении и будет адресована Парку.</p>
+
+      <div class="form-grid">
+        <label><span>Ваше имя *</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+        <label><span>Компания / проект *</span><input name="company" autocomplete="organization" required placeholder="Название бренда"></label>
+        <label><span>Телефон или e-mail *</span><input name="contact" required placeholder="Удобный контакт"></label>
+        <label><span>Формат</span><select name="format"><option>Отдельный food-корнер</option><option>Точка в общем фуд-корте</option><option>Хочу обсудить варианты</option></select></label>
+        <label class="form-wide"><span>Коротко о концепции</span><textarea name="concept" rows="4" placeholder="Кухня, меню, опыт работы, желаемая площадь"></textarea></label>
+      </div>
+      <label class="consent"><input type="checkbox" required><span>Согласен на обработку данных для ответа на заявку.</span></label>
+      <button class="button button--primary button--large form-submit" type="submit">Подготовить письмо</button>
+      <p class="form-status" id="form-status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <dialog class="modal modal--data" id="data-modal" aria-labelledby="data-title">
+    <div class="data-modal-content">
+      <button class="modal-close" type="button" data-close-modal aria-label="Закрыть">×</button>
+      <p class="overline">Чек-лист финализации</p>
+      <h2 id="data-title">Что запросить<br>у подразделений</h2>
+      <ul>
+        <li><span>Аналитика</span>гости за 12–24 месяца, помесячно и по дням недели</li>
+        <li><span>Финансы</span>средний чек гостя и целевые диапазоны для food-категорий</li>
+        <li><span>Маркетинг</span>семейная доля, прогноз прироста и событийный календарь</li>
+        <li><span>Техническая служба</span>генплан, мощности, вода/канализация и паспорта аттракционов</li>
+        <li><span>Коммерция</span>площади, число точек, финальные условия и ответственный контакт</li>
+      </ul>
+    </div>
+  </dialog>
+
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
