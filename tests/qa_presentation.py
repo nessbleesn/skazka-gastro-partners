@@ -24,6 +24,7 @@ def inspect_page(page, name: str) -> dict:
                 .map((image) => image.getAttribute('src')),
             pendingValues: [...document.querySelectorAll('.metric-card strong')]
                 .map((item) => item.textContent.trim()),
+            annualTraffic: document.querySelectorAll('.metric-card strong')[1]?.textContent.trim(),
             heroTitle: document.querySelector('#intro-title')?.textContent.trim(),
             heroVideo: (() => {
                 const video = document.querySelector('#hero-video');
@@ -61,7 +62,8 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["scrollWidth"] <= width + 1, f"{name}: horizontal overflow {result['scrollWidth']} > {width}"
     assert not console_errors, f"{name}: console errors {console_errors}"
     assert "Новые аттракционы" in result["heroTitle"]
-    assert "—" in result["pendingValues"], f"{name}: pending business data should stay explicit"
+    assert any("—" in value for value in result["pendingValues"]), f"{name}: pending business data should stay explicit"
+    assert result["annualTraffic"] == "3,5 млн", f"{name}: annual traffic is not updated"
     assert result["heroVideo"], f"{name}: hero video is missing"
     assert result["heroVideo"]["readyState"] >= 2, f"{name}: hero video did not load"
     assert 26 <= result["heroVideo"]["duration"] <= 28, f"{name}: unexpected hero video duration"

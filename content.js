@@ -8,11 +8,11 @@ window.PRESENTATION_DATA = {
       source: "Официальный сайт Парка"
     },
     {
-      value: "—",
+      value: "3,5 млн",
       label: "гостей Парка в год",
-      status: "Нужна выгрузка",
-      type: "pending",
-      source: "Фактические данные за 12–24 месяца"
+      status: "Подтверждено",
+      type: "verified",
+      source: "3 500 000 человек · данные Парка"
     },
     {
       value: "+—%",
