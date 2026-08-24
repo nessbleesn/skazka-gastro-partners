@@ -8,47 +8,37 @@ window.PRESENTATION_DATA = {
       source: "Официальный сайт Парка"
     },
     {
-      value: "3,5 млн",
+      value: "4,5 млн",
       label: "гостей Парка в год",
       status: "Подтверждено",
       type: "verified",
-      source: "3 500 000 человек · данные Парка"
+      source: "4 500 000 человек · данные Парка"
     },
     {
-      value: "+—%",
-      label: "прогноз прироста после запуска зоны",
-      status: "Нужен прогноз",
-      type: "pending",
-      source: "Сценарий базовый / целевой"
+      value: "+35%",
+      label: "прогноз прироста посещаемости новой зоны",
+      status: "Прогноз",
+      type: "forecast",
+      source: "Эффект запуска новой зоны"
     },
     {
-      value: "— ₽",
-      label: "средний чек гостя",
-      status: "Нужны данные",
-      type: "pending",
-      source: "Среднее и медиана"
+      value: "1 200 ₽",
+      label: "общий средний чек в общепите",
+      status: "Подтверждено",
+      type: "verified",
+      source: "Гостевые точки — 1 100 ₽ · точки Парка — ≈1 300 ₽"
     },
     {
-      value: "—%",
-      label: "семейная аудитория",
-      status: "Нужны данные",
-      type: "pending",
-      source: "Методика сегментации"
+      value: "≈72%",
+      label: "конверсия гостей в покупку общепита",
+      status: "Факт",
+      type: "verified",
+      source: "Общая конверсия по территории Парка"
     }
   ],
   seasonality: [
-    { month: "Янв", value: 68, event: true },
-    { month: "Фев", value: 60 },
-    { month: "Мар", value: 65 },
-    { month: "Апр", value: 73 },
-    { month: "Май", value: 88, event: true },
-    { month: "Июн", value: 94 },
-    { month: "Июл", value: 100, event: true },
-    { month: "Авг", value: 97 },
-    { month: "Сен", value: 82 },
-    { month: "Окт", value: 75 },
-    { month: "Ноя", value: 62 },
-    { month: "Дек", value: 78, event: true }
+    { label: "Основной сезон", value: 75, type: "main" },
+    { label: "Вне сезона", value: 25, type: "off" }
   ],
   rides: [
     {

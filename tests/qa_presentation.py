@@ -22,9 +22,16 @@ def inspect_page(page, name: str) -> dict:
             missingImages: [...document.images]
                 .filter((image) => !image.complete || image.naturalWidth === 0)
                 .map((image) => image.getAttribute('src')),
-            pendingValues: [...document.querySelectorAll('.metric-card strong')]
+            metricValues: [...document.querySelectorAll('.metric-card strong')]
                 .map((item) => item.textContent.trim()),
-            annualTraffic: document.querySelectorAll('.metric-card strong')[1]?.textContent.trim(),
+            metricSources: [...document.querySelectorAll('.metric-card small')]
+                .map((item) => item.textContent.trim()),
+            seasonShares: [...document.querySelectorAll('.season-share strong')]
+                .map((item) => item.textContent.trim()),
+            phoneLinks: [...document.querySelectorAll('a[href="tel:+79208539291"]')]
+                .map((item) => item.textContent.trim()),
+            leadButtons: document.querySelectorAll('[data-open-form]').length,
+            applicationModal: Boolean(document.querySelector('#application-modal')),
             heroTitle: document.querySelector('#intro-title')?.textContent.trim(),
             heroVideo: (() => {
                 const video = document.querySelector('#hero-video');
@@ -62,8 +69,11 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["scrollWidth"] <= width + 1, f"{name}: horizontal overflow {result['scrollWidth']} > {width}"
     assert not console_errors, f"{name}: console errors {console_errors}"
     assert "Новые аттракционы" in result["heroTitle"]
-    assert any("—" in value for value in result["pendingValues"]), f"{name}: pending business data should stay explicit"
-    assert result["annualTraffic"] == "3,5 млн", f"{name}: annual traffic is not updated"
+    assert result["metricValues"] == ["80+", "4,5 млн", "+35%", "1 200 ₽", "≈72%"], f"{name}: commercial metrics are incorrect"
+    assert "Гостевые точки — 1 100 ₽ · точки Парка — ≈1 300 ₽" in result["metricSources"], f"{name}: check breakdown is missing"
+    assert result["seasonShares"] == ["75%", "25%"], f"{name}: seasonality split is incorrect"
+    assert len(result["phoneLinks"]) == 2 and all("+7 (920) 853-92-91" in item for item in result["phoneLinks"]), f"{name}: partner phone is missing"
+    assert result["leadButtons"] == 0 and not result["applicationModal"], f"{name}: lead form should be removed"
     assert result["heroVideo"], f"{name}: hero video is missing"
     assert result["heroVideo"]["readyState"] >= 2, f"{name}: hero video did not load"
     assert 26 <= result["heroVideo"]["duration"] <= 28, f"{name}: unexpected hero video duration"
@@ -95,15 +105,10 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     page.wait_for_timeout(1200)
     page.screenshot(path=str(ARTIFACTS / f"{name}-join.png"), full_page=False)
 
-    page.locator("[data-open-form]").click()
-    assert page.locator("#application-modal").evaluate("dialog => dialog.open"), f"{name}: form modal did not open"
-    page.locator("input[name='name']").fill("Тестовый контакт")
-    page.locator("input[name='company']").fill("Тестовый проект")
-    page.locator("input[name='contact']").fill("test@example.com")
-    page.locator(".consent input").check()
-    assert page.locator("#application-form").evaluate("form => form.checkValidity()"), f"{name}: valid form is invalid"
-    page.locator("[data-close-modal]").first.click()
-    assert not page.locator("#application-modal").evaluate("dialog => dialog.open"), f"{name}: form modal did not close"
+    page.locator("[data-open-data]").click()
+    assert page.locator("#data-modal").evaluate("dialog => dialog.open"), f"{name}: data modal did not open"
+    page.locator("#data-modal [data-close-modal]").click()
+    assert not page.locator("#data-modal").evaluate("dialog => dialog.open"), f"{name}: data modal did not close"
 
     page.close()
     return result

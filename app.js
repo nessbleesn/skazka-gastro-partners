@@ -6,18 +6,21 @@
   const dots = Array.from(document.querySelectorAll(".chapter-dot"));
   const counter = document.getElementById("current-slide");
   const fullscreenButton = document.getElementById("fullscreen-button");
-  const applicationModal = document.getElementById("application-modal");
   const dataModal = document.getElementById("data-modal");
 
   function statusLabel(type, label) {
-    const className = type === "verified" ? "data-status--verified" : "data-status--pending";
+    const className = type === "verified"
+      ? "data-status--verified"
+      : type === "forecast"
+        ? "data-status--forecast"
+        : "data-status--pending";
     return `<span class="data-status ${className}">${label}</span>`;
   }
 
   function renderMetrics() {
     const grid = document.getElementById("metric-grid");
     grid.innerHTML = data.metrics.map((metric, index) => `
-      <article class="metric-card reveal ${metric.type === "verified" ? "metric-card--verified" : ""}">
+      <article class="metric-card reveal ${metric.type !== "pending" ? `metric-card--${metric.type}` : ""}">
         <div class="metric-card__top">${statusLabel(metric.type, metric.status)}<span>0${index + 1}</span></div>
         <strong>${metric.value}</strong>
         <p>${metric.label}</p>
@@ -28,10 +31,11 @@
 
   function renderSeasonality() {
     const chart = document.getElementById("season-chart");
+    chart.setAttribute("aria-label", data.seasonality.map((item) => `${item.label}: ${item.value}%`).join("; "));
     chart.innerHTML = data.seasonality.map((item) => `
-      <div class="chart-column" style="--value:${item.value}" aria-label="${item.month}: индекс ${item.value}">
-        <div class="chart-column__bar"><span></span>${item.event ? '<i title="Событийный пик"></i>' : ""}</div>
-        <small>${item.month}</small>
+      <div class="season-share season-share--${item.type}" style="--share:${item.value}" aria-label="${item.label}: ${item.value}%">
+        <strong>${item.value}%</strong>
+        <span>${item.label}</span>
       </div>
     `).join("");
   }
@@ -87,7 +91,7 @@
 
     document.addEventListener("keydown", (event) => {
       const tag = document.activeElement && document.activeElement.tagName;
-      if (["INPUT", "TEXTAREA", "SELECT"].includes(tag) || applicationModal.open || dataModal.open) return;
+      if (["INPUT", "TEXTAREA", "SELECT"].includes(tag) || dataModal.open) return;
       const currentIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
       if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
         event.preventDefault();
@@ -127,38 +131,14 @@
   }
 
   function setupModals() {
-    document.querySelectorAll("[data-open-form]").forEach((button) => button.addEventListener("click", () => openModal(applicationModal)));
     document.querySelectorAll("[data-open-data]").forEach((button) => button.addEventListener("click", () => openModal(dataModal)));
     document.querySelectorAll("[data-close-modal]").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()));
-    [applicationModal, dataModal].forEach((modal) => {
+    [dataModal].forEach((modal) => {
       modal.addEventListener("click", (event) => {
         const rect = modal.getBoundingClientRect();
         const outside = event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
         if (outside) modal.close();
       });
-    });
-  }
-
-  function setupApplicationForm() {
-    const form = document.getElementById("application-form");
-    const status = document.getElementById("form-status");
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (!form.reportValidity()) return;
-      const values = Object.fromEntries(new FormData(form).entries());
-      const subject = `Заявка на food-размещение — ${values.company}`;
-      const body = [
-        `Имя: ${values.name}`,
-        `Компания / проект: ${values.company}`,
-        `Контакт: ${values.contact}`,
-        `Формат: ${values.format}`,
-        "",
-        "Концепция:",
-        values.concept || "Не указана"
-      ].join("\n");
-      status.textContent = "Открываем почтовое приложение…";
-      window.location.href = `mailto:info@parkskazka.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.setTimeout(() => { status.textContent = "Письмо подготовлено. Если окно не открылось, напишите на info@parkskazka.com."; }, 800);
     });
   }
 
@@ -203,7 +183,6 @@
   setupNavigation();
   setupFullscreen();
   setupModals();
-  setupApplicationForm();
   setupHeroVideo();
   activateSlide(slides[0]);
 })();
