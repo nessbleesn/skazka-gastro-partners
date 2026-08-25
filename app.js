@@ -44,7 +44,7 @@
     const grid = document.getElementById("ride-grid");
     grid.innerHTML = data.rides.map((ride) => `
       <article class="ride-card reveal">
-        <div class="ride-card__media"><img src="${ride.image}" alt="${ride.alt}" loading="eager"><span>${ride.number}</span></div>
+        <div class="ride-card__media"><img src="${ride.image}" alt="${ride.alt}" loading="eager"><span>${ride.routeLabel}</span></div>
         <div class="ride-card__body">
           <h3>${ride.name}</h3>
           <p>${ride.summary}</p>
@@ -77,7 +77,7 @@
         .filter((entry) => entry.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (visible) activateSlide(visible.target);
-    }, { threshold: [0.35, 0.55, 0.75] });
+    }, { threshold: [0.08, 0.2, 0.35, 0.55, 0.75] });
     slides.forEach((slide) => observer.observe(slide));
   }
 

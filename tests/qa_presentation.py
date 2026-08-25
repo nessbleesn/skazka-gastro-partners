@@ -19,6 +19,13 @@ def inspect_page(page, name: str) -> dict:
             slides: document.querySelectorAll('.slide').length,
             metrics: document.querySelectorAll('.metric-card').length,
             rides: document.querySelectorAll('.ride-card').length,
+            rideHeading: document.querySelector('#attractions-title')?.innerText.trim(),
+            rideNames: [...document.querySelectorAll('.ride-card h3')]
+                .map((item) => item.textContent.trim()),
+            rideRouteLabels: [...document.querySelectorAll('.ride-card__media > span')]
+                .map((item) => item.textContent.trim()),
+            rideFacts: [...document.querySelectorAll('.ride-card ul')]
+                .map((list) => [...list.children].map((item) => item.textContent.trim())),
             routeHeading: document.querySelector('#zone-title')?.innerText.trim(),
             routeSourceLabel: document.querySelector('.map-source')?.textContent.trim(),
             routeEntries: [...document.querySelectorAll('.story-entry')]
@@ -82,7 +89,17 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
 
     assert result["slides"] == 7, f"{name}: expected 7 slides, got {result}"
     assert result["metrics"] == 5, f"{name}: expected 5 metrics"
-    assert result["rides"] == 3, f"{name}: expected 3 ride cards"
+    assert result["rides"] == 5, f"{name}: expected 5 ride cards"
+    assert result["rideHeading"] == "Пять аттракционов.\nПять магнитов трафика.", f"{name}: attraction heading is outdated"
+    assert result["rideNames"] == ["Бумеранг", "Вихрь", "Путь дракона", "Паук", "Смерч"], f"{name}: attraction composition is incorrect"
+    assert result["rideRouteLabels"] == ["Молодёжный маршрут"] * 3 + ["Семейный маршрут"] * 2, f"{name}: attraction route labels are incorrect"
+    assert result["rideFacts"] == [
+        ["37,451 м", "85,32 км/ч", "303 м трек"],
+        ["17,9 м", "47,916 км/ч", "392 м трек"],
+        ["20,5 м", "63 км/ч", "377 м трек"],
+        ["5 м", "6 об/мин", "от 120 см"],
+        ["34,8 м", "15 об/мин", "от 140 см"],
+    ], f"{name}: final technical facts are incorrect"
     assert result["routeHeading"] == "Два пути\nгостя.", f"{name}: selected route heading is missing"
     assert result["routeSourceLabel"] == "Источник объектов · карта 2026", f"{name}: route source label is missing"
     assert result["routeEntries"] == ["Запад", "Север", "Юг"], f"{name}: expected 3 incoming flows"
@@ -94,8 +111,14 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["routeStepCounts"] == [5, 4], f"{name}: route step sequences are incorrect"
     assert result["routeDisclaimer"].startswith("Распределение food-контактов — рабочая коммерческая модель"), f"{name}: working-model disclaimer is missing"
     assert result["mapImages"] == 0, f"{name}: route slide should not display the source map"
-    assert result["rideOperationRows"] == 9, f"{name}: expected 9 attraction planning rows"
-    assert result["rideOperationValues"] == ["на согласовании"] * 9, f"{name}: unapproved operational figures were inserted"
+    assert result["rideOperationRows"] == 15, f"{name}: expected 15 attraction planning rows"
+    assert result["rideOperationValues"] == [
+        "20 человек", "590 чел./час", "на согласовании",
+        "20 человек", "600 чел./час", "на согласовании",
+        "16 человек", "480 чел./час", "на согласовании",
+        "24 человека", "480 чел./час", "на согласовании",
+        "56 человек", "1 120 чел./час", "на согласовании",
+    ], f"{name}: attraction operating data are incorrect"
     assert not result["missingImages"], f"{name}: missing images {result['missingImages']}"
     assert result["scrollWidth"] <= width + 1, f"{name}: horizontal overflow {result['scrollWidth']} > {width}"
     assert not console_errors, f"{name}: console errors {console_errors}"
@@ -123,6 +146,8 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
 
     page.locator("#attractions").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
+    assert page.locator("#attractions").evaluate("element => element.classList.contains('is-active')"), f"{name}: tall attraction slide did not activate"
+    assert page.locator(".ride-card").first.evaluate("element => getComputedStyle(element).opacity === '1'"), f"{name}: attraction cards are not visible"
     page.screenshot(path=str(ARTIFACTS / f"{name}-attractions.png"), full_page=False)
     page.locator("#attractions").screenshot(path=str(ARTIFACTS / f"{name}-attractions-section.png"))
 
