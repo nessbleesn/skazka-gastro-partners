@@ -30,6 +30,10 @@ def inspect_page(page, name: str) -> dict:
             routeSourceLabel: document.querySelector('.map-source')?.textContent.trim(),
             routeEntries: [...document.querySelectorAll('.story-entry')]
                 .map((item) => item.textContent.trim()),
+            dataRequest: Boolean(document.querySelector('.data-request')),
+            dataModal: Boolean(document.querySelector('#data-modal')),
+            heroRouteLines: document.querySelectorAll('#intro .route-line').length,
+            countUpTargets: document.querySelectorAll('[data-countup]').length,
             routeLanes: [...document.querySelectorAll('.route-story header h3')]
                 .map((item) => item.textContent.trim()),
             routeRideNodes: [...document.querySelectorAll('.story-attraction > strong')]
@@ -100,9 +104,12 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
         ["5 м", "6 об/мин", "от 120 см"],
         ["34,8 м", "15 об/мин", "от 140 см"],
     ], f"{name}: final technical facts are incorrect"
-    assert result["routeHeading"] == "Два пути\nгостя.", f"{name}: selected route heading is missing"
+    assert result["routeHeading"] == "Что\nоткрываем", f"{name}: route heading was not rebuilt"
     assert result["routeSourceLabel"] == "Источник объектов · карта 2026", f"{name}: route source label is missing"
-    assert result["routeEntries"] == ["Запад", "Север", "Юг"], f"{name}: expected 3 incoming flows"
+    assert result["routeEntries"] == [], f"{name}: directional inlet labels should be removed"
+    assert not result["dataRequest"] and not result["dataModal"], f"{name}: finalization request should be removed"
+    assert result["heroRouteLines"] == 0, f"{name}: decorative hero line should not cross the copy"
+    assert result["countUpTargets"] >= 40, f"{name}: numeric animation coverage is incomplete"
     assert result["routeLanes"] == ["Молодёжной компании", "Семьи"], f"{name}: expected 2 audience stories"
     assert result["routeRideNodes"] == ["Бумеранг", "Вихрь", "Путь дракона", "Паук", "Смерч"], f"{name}: route attraction nodes are incorrect"
     assert result["routeFoodNodes"] == 6, f"{name}: expected 6 food contacts"
@@ -132,17 +139,31 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["heroVideo"]["readyState"] >= 2, f"{name}: hero video did not load"
     assert 26 <= result["heroVideo"]["duration"] <= 28, f"{name}: unexpected hero video duration"
     assert result["heroVideo"]["muted"] and result["heroVideo"]["loop"] and result["heroVideo"]["playsInline"], f"{name}: hero video autoplay flags are incomplete"
+    for selector in [".hero-title", ".hero-lead", ".hero-actions", ".hero-foot"]:
+        box = page.locator(selector).bounding_box()
+        assert box and box["y"] >= 0 and box["y"] + box["height"] <= height, f"{name}: {selector} is outside the hero viewport"
 
     page.screenshot(path=str(ARTIFACTS / f"{name}-hero.png"), full_page=False)
 
     page.locator("#numbers").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
+    assert page.locator(".metric-card [data-countup]").first.get_attribute("data-counted") == "true", f"{name}: metric count-up did not run"
+    assert page.locator(".metric-card strong").all_inner_texts() == ["80+", "4,5 млн", "+35%", "1 200 ₽", "≈72%"], f"{name}: metric count-up did not finish"
     page.screenshot(path=str(ARTIFACTS / f"{name}-numbers.png"), full_page=False)
 
     page.locator("#zone").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
+    assert page.locator(".zone-composition dt").all_inner_texts() == ["3", "5", "6"], f"{name}: route summary count-up did not finish"
     page.screenshot(path=str(ARTIFACTS / f"{name}-zone.png"), full_page=False)
     page.locator("#zone").screenshot(path=str(ARTIFACTS / f"{name}-zone-section.png"))
+    if name == "desktop":
+        first_step = page.locator(".story-step").first
+        first_step.hover()
+        page.wait_for_timeout(250)
+        assert first_step.evaluate("element => getComputedStyle(element).transform !== 'none'"), f"{name}: route hover animation is missing"
+        page.mouse.move(10, 10)
+        page.wait_for_timeout(350)
+        assert first_step.evaluate("element => getComputedStyle(element).transform === 'none'"), f"{name}: route hover state does not return smoothly"
 
     page.locator("#attractions").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
@@ -162,11 +183,6 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     page.locator("#join").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
     page.screenshot(path=str(ARTIFACTS / f"{name}-join.png"), full_page=False)
-
-    page.locator("[data-open-data]").click()
-    assert page.locator("#data-modal").evaluate("dialog => dialog.open"), f"{name}: data modal did not open"
-    page.locator("#data-modal [data-close-modal]").click()
-    assert not page.locator("#data-modal").evaluate("dialog => dialog.open"), f"{name}: data modal did not close"
 
     page.close()
     return result
