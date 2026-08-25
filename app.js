@@ -60,6 +60,7 @@
   function activateSlide(slide) {
     const index = slides.indexOf(slide);
     if (index < 0) return;
+    slide.classList.add("has-entered");
     slides.forEach((item) => item.classList.toggle("is-active", item === slide));
     dots.forEach((dot, dotIndex) => {
       const active = dotIndex === index;
