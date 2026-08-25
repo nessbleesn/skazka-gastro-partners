@@ -49,7 +49,9 @@
           <h3>${ride.name}</h3>
           <p>${ride.summary}</p>
           <ul>${ride.facts.map((fact) => `<li>${fact}</li>`).join("")}</ul>
-          <div class="ride-card__pending"><span>Пропускная способность</span><strong>на согласовании</strong></div>
+          <dl class="ride-card__operations">
+            ${ride.operations.map((item) => `<div><dt>${item.label}</dt><dd>${item.value}</dd></div>`).join("")}
+          </dl>
         </div>
       </article>
     `).join("");

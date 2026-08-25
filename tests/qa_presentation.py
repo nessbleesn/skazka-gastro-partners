@@ -19,6 +19,24 @@ def inspect_page(page, name: str) -> dict:
             slides: document.querySelectorAll('.slide').length,
             metrics: document.querySelectorAll('.metric-card').length,
             rides: document.querySelectorAll('.ride-card').length,
+            routeHeading: document.querySelector('#zone-title')?.innerText.trim(),
+            routeSourceLabel: document.querySelector('.map-source')?.textContent.trim(),
+            routeEntries: [...document.querySelectorAll('.story-entry')]
+                .map((item) => item.textContent.trim()),
+            routeLanes: [...document.querySelectorAll('.route-story header h3')]
+                .map((item) => item.textContent.trim()),
+            routeRideNodes: [...document.querySelectorAll('.story-attraction > strong')]
+                .map((item) => item.textContent.trim()),
+            routeFoodNodes: document.querySelectorAll('.story-food, .story-result--food').length,
+            routeFoodLabels: [...document.querySelectorAll('.story-food > strong, .story-result--food > strong')]
+                .map((item) => item.textContent.trim()),
+            routeCatalogNumbers: document.querySelectorAll('.story-index, .story-step b').length,
+            routeStepCounts: [...document.querySelectorAll('.story-steps')].map((list) => list.children.length),
+            routeDisclaimer: document.querySelector('.story-disclaimer')?.textContent.trim(),
+            mapImages: document.querySelectorAll('.park-map-base').length,
+            rideOperationRows: document.querySelectorAll('.ride-card__operations > div').length,
+            rideOperationValues: [...document.querySelectorAll('.ride-card__operations dd')]
+                .map((item) => item.textContent.trim()),
             missingImages: [...document.images]
                 .filter((image) => !image.complete || image.naturalWidth === 0)
                 .map((image) => image.getAttribute('src')),
@@ -65,6 +83,19 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["slides"] == 7, f"{name}: expected 7 slides, got {result}"
     assert result["metrics"] == 5, f"{name}: expected 5 metrics"
     assert result["rides"] == 3, f"{name}: expected 3 ride cards"
+    assert result["routeHeading"] == "Два пути\nгостя.", f"{name}: selected route heading is missing"
+    assert result["routeSourceLabel"] == "Источник объектов · карта 2026", f"{name}: route source label is missing"
+    assert result["routeEntries"] == ["Запад", "Север", "Юг"], f"{name}: expected 3 incoming flows"
+    assert result["routeLanes"] == ["Молодёжной компании", "Семьи"], f"{name}: expected 2 audience stories"
+    assert result["routeRideNodes"] == ["Бумеранг", "Вихрь", "Путь дракона", "Паук", "Смерч"], f"{name}: route attraction nodes are incorrect"
+    assert result["routeFoodNodes"] == 6, f"{name}: expected 6 food contacts"
+    assert result["routeFoodLabels"] == ["Блинная", "Сказочные крылья", "Бургерная + фудкорт", "Бум Вафля", "Базилик", "Общий фудкорт и посадка"], f"{name}: food route labels are incorrect"
+    assert result["routeCatalogNumbers"] == 0, f"{name}: internal map numbers should not be displayed"
+    assert result["routeStepCounts"] == [5, 4], f"{name}: route step sequences are incorrect"
+    assert result["routeDisclaimer"].startswith("Распределение food-контактов — рабочая коммерческая модель"), f"{name}: working-model disclaimer is missing"
+    assert result["mapImages"] == 0, f"{name}: route slide should not display the source map"
+    assert result["rideOperationRows"] == 9, f"{name}: expected 9 attraction planning rows"
+    assert result["rideOperationValues"] == ["на согласовании"] * 9, f"{name}: unapproved operational figures were inserted"
     assert not result["missingImages"], f"{name}: missing images {result['missingImages']}"
     assert result["scrollWidth"] <= width + 1, f"{name}: horizontal overflow {result['scrollWidth']} > {width}"
     assert not console_errors, f"{name}: console errors {console_errors}"
@@ -88,10 +119,12 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     page.locator("#zone").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
     page.screenshot(path=str(ARTIFACTS / f"{name}-zone.png"), full_page=False)
+    page.locator("#zone").screenshot(path=str(ARTIFACTS / f"{name}-zone-section.png"))
 
     page.locator("#attractions").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
     page.screenshot(path=str(ARTIFACTS / f"{name}-attractions.png"), full_page=False)
+    page.locator("#attractions").screenshot(path=str(ARTIFACTS / f"{name}-attractions-section.png"))
 
     page.locator("#offer").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)

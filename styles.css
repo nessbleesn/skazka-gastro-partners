@@ -411,48 +411,59 @@ a { color: inherit; }
 .data-request strong { color: var(--ink); }
 .text-button { padding: 0; border: 0; color: var(--coral); background: transparent; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 
-/* Zone map */
-.slide--zone, .slide--offer, .slide--join { color: var(--paper); background: var(--night); }
-.slide--zone::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 75% 34%, rgba(57,184,227,.11), transparent 35%), radial-gradient(circle at 9% 90%, rgba(184,227,75,.08), transparent 28%); }
-.zone-shell { display: grid; grid-template-columns: minmax(300px, .36fr) minmax(650px, .64fr); align-items: center; gap: clamp(32px, 5vw, 86px); }
-.zone-shell .section-heading { display: block; margin: 0; }
-.zone-shell .section-heading h2 { margin-bottom: 28px; }
-.zone-shell .section-heading > p:last-child { margin: 0; }
+/* Zone guest stories */
+.slide--offer, .slide--join { color: var(--paper); background: var(--night); }
+.slide--zone { color: var(--ink); background: var(--mist); }
+.slide--zone::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 83% 8%, rgba(57,184,227,.08), transparent 27%), radial-gradient(circle at 11% 88%, rgba(255,93,80,.06), transparent 25%); }
+.zone-shell { gap: 18px; }
+.zone-story-heading { display: grid; grid-template-columns: minmax(360px, .9fr) minmax(520px, 1.1fr); align-items: end; gap: clamp(36px, 7vw, 110px); }
+.section-heading--story { display: block; margin: 0; }
+.section-heading--story h2 { margin: 0; }
+.section-heading--story h2 em { color: var(--coral); font-style: normal; }
+.zone-story-summary > p { max-width: 620px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.45; }
+.zone-composition { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 18px 0 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.zone-composition div { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px; padding: 10px 12px; border-right: 1px solid var(--line); }
+.zone-composition div:first-child { padding-left: 0; }
+.zone-composition div:last-child { border-right: 0; }
+.zone-composition dt { color: var(--coral); font-family: "Unbounded", sans-serif; font-size: 22px; line-height: 1; }
+.zone-composition dd { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.25; }
 
-.zone-map { padding: 16px; border: 1px solid rgba(255,255,255,.13); border-radius: 28px; background: rgba(255,255,255,.045); box-shadow: 0 26px 90px rgba(0,0,0,.28); }
-.map-topline { min-height: 38px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 5px 12px; }
-.map-legend { display: flex; gap: 15px; color: rgba(255,255,255,.58); font-size: 8px; }
-.map-legend span { display: flex; align-items: center; gap: 6px; }
-.map-legend i { display: inline-block; }
-.legend-attraction { width: 8px; height: 8px; border: 2px solid var(--blue); border-radius: 50%; }
-.legend-food { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); }
-.legend-flow { width: 20px; height: 2px; background: var(--coral); }
-.map-art { display: block; width: 100%; height: auto; border-radius: 22px; background: #0a2436; }
-.map-terrain { fill: rgba(57,184,227,.055); stroke: rgba(57,184,227,.12); stroke-width: 2; }
-.map-flow { fill: none; stroke: var(--coral); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 10 11; filter: url(#glow); }
-.map-flow--ghost { stroke: rgba(255,255,255,.13); stroke-width: 18; stroke-dasharray: none; filter: none; }
-.map-flow--branch { stroke: var(--blue); }
-.slide.is-active .map-flow:not(.map-flow--ghost) { animation: routeTravel 14s linear infinite; }
-.map-entry circle { fill: var(--paper); }
-.map-entry path { fill: none; stroke: var(--night); stroke-width: 3; stroke-linecap: round; }
-.map-entry text { fill: rgba(255,255,255,.62); font-family: "IBM Plex Mono", monospace; font-size: 12px; text-transform: uppercase; }
-.map-node text { text-anchor: middle; fill: var(--paper); font-family: "Onest", sans-serif; font-weight: 700; font-size: 17px; }
-.map-node__num { fill: rgba(255,255,255,.38) !important; font-family: "IBM Plex Mono", monospace !important; font-size: 10px !important; }
-.map-node--ride > circle:first-child { fill: rgba(57,184,227,.12); stroke: var(--blue); stroke-width: 3; }
-.map-node--ride > circle:nth-child(2) { fill: var(--night); stroke: rgba(255,255,255,.15); stroke-width: 1; }
-.map-node--ride path { fill: none; stroke: var(--lime); stroke-width: 4; stroke-linecap: round; }
-.map-node--food { cursor: pointer; }
-.map-node--food circle { fill: var(--lime); stroke: var(--night); stroke-width: 5; transition: transform .25s var(--ease); }
-.map-node--food:hover circle, .map-node--food:focus circle { transform: scale(1.14); transform-box: fill-box; transform-origin: center; }
-.map-node--food text { fill: var(--night); font-family: "IBM Plex Mono", monospace; font-size: 13px; }
-.map-node--food path { stroke: var(--lime); stroke-width: 3; }
-.map-opportunities { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 10px; }
-.map-opportunities article { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 9px 10px; border-radius: 12px; background: rgba(255,255,255,.055); }
-.map-opportunities article > span { display: grid; place-items: center; flex: 0 0 30px; height: 30px; border-radius: 50%; color: var(--night); background: var(--lime); font-family: "IBM Plex Mono", monospace; font-size: 10px; }
-.map-opportunities div { min-width: 0; }
-.map-opportunities strong, .map-opportunities small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.map-opportunities strong { font-size: 9px; }
-.map-opportunities small { margin-top: 2px; color: rgba(255,255,255,.45); font-size: 8px; }
+.zone-map { min-width: 0; }
+.route-panel--stories { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.map-topline { min-height: 30px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.map-source { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 8px; }
+.story-inlets { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 5px 0 10px; }
+.story-inlets > div { display: flex; gap: 6px; }
+.story-entry { display: inline-flex; padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.52); font-size: 9px; }
+.story-inlets strong { color: #435b6a; font-size: 10px; }
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.route-story { position: relative; display: flex; min-width: 0; min-height: 350px; flex-direction: column; padding: 19px; overflow: hidden; border-radius: 24px; color: var(--paper); background: var(--night-deep); box-shadow: 0 18px 45px rgba(7,27,45,.12); }
+.route-story::after { content: ""; position: absolute; top: -95px; right: -90px; width: 240px; height: 240px; border: 58px solid rgba(255,93,80,.09); border-radius: 50%; }
+.route-story--family::after { border-color: rgba(57,184,227,.11); }
+.route-story > header { position: relative; z-index: 1; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.route-story header small { display: block; margin-bottom: 3px; color: var(--blue-light); font-family: "IBM Plex Mono", monospace; font-size: 7px; text-transform: uppercase; }
+.route-story h3 { max-width: 460px; margin: 0; font-family: "Unbounded", sans-serif; font-size: clamp(18px, 1.8vw, 27px); line-height: 1.02; letter-spacing: -.045em; }
+.story-index { color: var(--coral); font-family: "IBM Plex Mono", monospace; font-size: 20px; }
+.route-story--family .story-index { color: var(--blue); }
+.story-steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; margin: 0; padding: 0; list-style: none; }
+.story-steps--family { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.story-steps::before { content: ""; position: absolute; top: 12px; left: 2%; right: 2%; height: 2px; background: rgba(255,255,255,.2); }
+.story-step { position: relative; display: flex; min-width: 0; min-height: 178px; flex-direction: column; padding: 37px 9px 10px; border-radius: 12px; background: rgba(255,255,255,.055); }
+.story-step::before { content: ""; position: absolute; top: 6px; left: 50%; width: 13px; height: 13px; border: 4px solid var(--night-deep); border-radius: 50%; background: var(--coral); transform: translateX(-50%); }
+.route-story--family .story-step::before { background: var(--blue); }
+.story-step > span { color: var(--coral); font-family: "IBM Plex Mono", monospace; font-size: 7px; line-height: 1.25; text-transform: uppercase; }
+.route-story--family .story-step > span { color: var(--blue); }
+.story-step > span b { margin-right: 3px; font-weight: 500; }
+.story-step strong { margin-top: 10px; font-size: 11px; line-height: 1.14; overflow-wrap: anywhere; }
+.story-step small { margin-top: auto; color: rgba(255,255,255,.54); font-size: 7px; line-height: 1.3; }
+.story-step.story-food { color: var(--night); background: var(--lime); }
+.story-step.story-food::before { background: var(--lime); }
+.story-step.story-food > span, .route-story--family .story-step.story-food > span { color: #53691c; }
+.story-step.story-food small { color: rgba(7,27,45,.58); }
+.story-result { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: auto; padding: 10px 13px; border-radius: 11px; color: var(--ink); background: var(--paper); }
+.story-result span { font-family: "IBM Plex Mono", monospace; font-size: 6px; text-transform: uppercase; }
+.story-result strong { font-size: 10px; text-align: right; }
+.story-disclaimer { margin: 8px 0 0; color: var(--muted); font-size: 8px; text-align: right; }
 
 /* Attractions */
 .ride-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -467,9 +478,10 @@ a { color: inherit; }
 .ride-card p { min-height: 42px; margin: 10px 0 14px; color: var(--muted); font-size: 12px; line-height: 1.42; }
 .ride-card ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
 .ride-card li { padding: 6px 9px; border-radius: 999px; color: #174962; background: rgba(57,184,227,.11); font-family: "IBM Plex Mono", monospace; font-size: 8px; }
-.ride-card__pending { display: flex; justify-content: space-between; gap: 10px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 9px; }
-.ride-card__pending span { color: var(--muted); }
-.ride-card__pending strong { color: var(--coral); font-family: "IBM Plex Mono", monospace; font-size: 8px; text-transform: uppercase; }
+.ride-card__operations { margin: 16px 0 0; border-top: 1px solid var(--line); }
+.ride-card__operations div { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.ride-card__operations dt { color: var(--muted); font-size: 8px; }
+.ride-card__operations dd { margin: 0; color: var(--coral); font-family: "IBM Plex Mono", monospace; font-size: 7px; font-weight: 700; text-align: right; text-transform: uppercase; }
 
 /* Offer */
 .slide--offer::before { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0 56%, rgba(57,184,227,.07) 56% 100%); }
@@ -563,9 +575,12 @@ a { color: inherit; }
 @media (max-width: 1160px) {
   :root { --shell: min(1020px, calc(100vw - 56px)); }
   .section-heading { column-gap: 40px; }
-  .zone-shell { grid-template-columns: 320px 1fr; gap: 28px; }
-  .map-opportunities { grid-template-columns: 1fr; }
-  .map-opportunities article:nth-child(n+2) { display: none; }
+  .zone-shell { gap: 16px; }
+  .zone-story-heading { grid-template-columns: minmax(300px, .75fr) minmax(500px, 1.25fr); gap: 42px; }
+  .route-story { padding: 16px; }
+  .route-story h3 { font-size: 20px; }
+  .story-step { padding-inline: 7px; }
+  .story-step strong { font-size: 10px; }
   .offer-layout { grid-template-columns: .4fr .6fr; }
   .format-card { grid-template-columns: 36px 1fr 120px; padding: 20px; }
   .commercial-card { padding: 24px; }
@@ -591,10 +606,13 @@ a { color: inherit; }
   .metric-grid { grid-template-columns: repeat(2, 1fr); }
   .metric-card, .metric-card:first-child, .metric-card:nth-child(2) { grid-column: span 1; }
   .metric-card:last-child { grid-column: 1 / -1; }
-  .zone-shell { display: flex; gap: 32px; }
+  .zone-shell { display: flex; gap: 22px; }
+  .zone-story-heading { grid-template-columns: 1fr; gap: 14px; }
+  .zone-story-summary { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: 24px; }
+  .zone-composition { margin-top: 0; }
   .zone-map { width: 100%; }
-  .map-opportunities { grid-template-columns: repeat(3, 1fr); }
-  .map-opportunities article:nth-child(n+2) { display: flex; }
+  .story-grid { grid-template-columns: 1fr; }
+  .route-story { min-height: 330px; }
   .ride-grid { grid-template-columns: 1fr 1fr; }
   .ride-card:last-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
   .ride-card:last-child .ride-card__media { aspect-ratio: auto; }
@@ -641,13 +659,30 @@ a { color: inherit; }
   .season-share span { font-size: 8px; }
   .data-request { grid-template-columns: auto 1fr; }
   .data-request .text-button { grid-column: 2; justify-self: start; }
-  .zone-map { padding: 8px; border-radius: 18px; }
+  .zone-shell { gap: 18px; }
+  .zone-story-summary { display: block; }
+  .zone-story-summary > p { font-size: 13px; }
+  .zone-composition { margin-top: 15px; }
+  .zone-composition div { grid-template-columns: 1fr; gap: 4px; padding: 9px 8px; }
+  .zone-composition dt { font-size: 19px; }
+  .zone-composition dd { font-size: 8px; }
+  .route-panel--stories { padding: 0; border-radius: 0; }
   .map-topline { align-items: flex-start; }
-  .map-legend { display: none; }
-  .map-art { border-radius: 14px; }
-  .map-opportunities { display: grid; grid-template-columns: 1fr; padding: 8px 2px 2px; }
-  .map-opportunities article:nth-child(n+2) { display: flex; }
-  .map-opportunities strong, .map-opportunities small { white-space: normal; }
+  .map-source { max-width: 150px; text-align: right; }
+  .story-inlets { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .story-entry { padding: 5px 12px; }
+  .route-story { min-height: 0; padding: 16px; border-radius: 20px; }
+  .route-story > header { margin-bottom: 14px; }
+  .route-story h3 { max-width: 245px; font-size: 22px; }
+  .story-steps, .story-steps--family { grid-template-columns: 1fr; gap: 7px; padding-left: 19px; }
+  .story-steps::before { top: 2%; bottom: 2%; left: 5px; width: 2px; height: auto; }
+  .story-step { display: grid; min-height: 72px; grid-template-columns: 76px 1fr; gap: 3px 9px; padding: 11px 11px 11px 16px; }
+  .story-step::before { top: 50%; left: -14px; transform: translateY(-50%); }
+  .story-step > span { grid-row: 1 / span 2; align-self: center; }
+  .story-step strong { align-self: end; margin: 0; font-size: 12px; }
+  .story-step small { align-self: start; margin: 0; font-size: 7px; }
+  .story-result { margin-top: 12px; }
+  .story-disclaimer { line-height: 1.35; text-align: left; }
   .ride-grid { grid-template-columns: 1fr; }
   .ride-card:last-child { grid-column: auto; display: block; }
   .ride-card:last-child .ride-card__media { aspect-ratio: 16 / 8.7; }
@@ -683,6 +718,14 @@ a { color: inherit; }
   .season-card { min-height: 302px; padding: 20px; }
   .chart { height: 150px; }
   .data-request { margin-top: 10px; padding-block: 9px; }
+  .zone-shell { gap: 12px; }
+  .zone-story-heading { gap: 36px; }
+  .zone-story-summary > p { font-size: 12px; }
+  .zone-composition { margin-top: 10px; }
+  .route-story { min-height: 300px; padding: 14px; }
+  .route-story > header { margin-bottom: 10px; }
+  .story-step { min-height: 148px; padding-top: 34px; }
+  .story-result { padding-block: 8px; }
   .ride-card__media { aspect-ratio: 16 / 7.6; }
   .ride-card__body { padding: 14px 16px; }
   .commercial-card { min-height: 344px; }

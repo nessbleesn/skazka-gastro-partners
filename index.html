@@ -118,70 +118,66 @@
 
         <aside class="data-request reveal">
           <span class="data-request__icon">↳</span>
-          <p><strong>Для финальной версии нужны:</strong> помесячная динамика, пропускная способность и утверждённый генплан.</p>
+          <p><strong>Для финальной версии нужны:</strong> помесячная динамика, вместимость и пропускная способность, прогнозы потока и утверждённый генплан.</p>
           <button type="button" class="text-button" data-open-data>Список данных</button>
         </aside>
       </div>
     </section>
 
-    <section class="slide slide--zone" id="zone" data-chapter="Карта зоны" aria-labelledby="zone-title">
+    <section class="slide slide--zone" id="zone" data-chapter="Два пути гостя" aria-labelledby="zone-title">
       <div class="slide-shell zone-shell">
-        <header class="section-heading section-heading--light reveal">
-          <p class="overline">Что открываем</p>
-          <h2 id="zone-title">Точки питания —<br><em>на пути гостя.</em></h2>
-          <p>Схема показывает принцип привязки к потокам. Точные границы и координаты фиксируются по утверждённому генплану.</p>
+        <header class="zone-story-heading reveal">
+          <div class="section-heading section-heading--story">
+            <p class="overline">Что открываем</p>
+            <h2 id="zone-title">Два пути<br><em>гостя.</em></h2>
+          </div>
+          <div class="zone-story-summary">
+            <p>Новая экстрим-зона формирует два сценария движения. Food-точки встроены в последовательность аттракционов как потенциальные коммерческие контакты.</p>
+            <dl class="zone-composition" aria-label="Состав маршрутной модели">
+              <div><dt>3</dt><dd>входящих потока</dd></div>
+              <div><dt>5</dt><dd>ключевых аттракционов</dd></div>
+              <div><dt>6</dt><dd>food-контактов</dd></div>
+            </dl>
+          </div>
         </header>
 
-        <div class="zone-map reveal" aria-label="Концептуальная схема новой экстрим-зоны">
+        <div class="zone-map route-panel route-panel--stories reveal" aria-label="Два маршрута гостей новой экстрим-зоны">
           <div class="map-topline">
-            <span class="data-status data-status--concept">Концептуальная схема</span>
-            <div class="map-legend"><span><i class="legend-attraction"></i>аттракцион</span><span><i class="legend-food"></i>точка питания</span><span><i class="legend-flow"></i>маршрут гостя</span></div>
+            <span class="data-status data-status--concept">Рабочая маршрутная модель</span>
+            <span class="map-source">Источник объектов · карта 2026</span>
           </div>
 
-          <svg class="map-art" viewBox="0 0 1080 610" role="img" aria-labelledby="map-title map-desc">
-            <title id="map-title">Схема размещения аттракционов и точек питания</title>
-            <desc id="map-desc">Поток движется от входа через аттракционы Вихрь, Бумеранг и Смерч. Три потенциальные точки питания располагаются у пересечений маршрутов.</desc>
-            <defs>
-              <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="rgba(255,255,255,.06)"/></pattern>
-              <filter id="glow"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <rect width="1080" height="610" rx="30" fill="url(#grid)"/>
-            <path class="map-terrain" d="M30 445c94-92 164-55 239-120 102-88 171-40 258-103 95-70 155-35 234-98 71-55 153-63 291-21v422H30z"/>
-            <path class="map-flow map-flow--ghost" d="M36 505 C180 474 153 367 284 357 S399 436 514 375 579 221 720 244 826 373 1044 211"/>
-            <path class="map-flow" d="M36 505 C180 474 153 367 284 357 S399 436 514 375 579 221 720 244 826 373 1044 211"/>
-            <path class="map-flow map-flow--branch" d="M514 375 C650 455 791 463 914 393"/>
-
-            <g class="map-entry" transform="translate(52 462)"><circle r="26"/><path d="M-8 0h16M3-5l5 5-5 5"/><text x="-18" y="49">Вход</text></g>
-
-            <g class="map-node map-node--ride" transform="translate(278 355)">
-              <circle r="46"/><circle r="33"/><path d="M-18 8c11-29 24-29 37 0M-16-8h32"/>
-              <text x="0" y="74">Вихрь</text><text class="map-node__num" x="0" y="94">01</text>
-            </g>
-            <g class="map-node map-node--ride" transform="translate(707 246)">
-              <circle r="58"/><circle r="42"/><path d="M-27 15c9-40 46-40 54 0M-25-3h50"/>
-              <text x="0" y="87">Бумеранг</text><text class="map-node__num" x="0" y="107">02</text>
-            </g>
-            <g class="map-node map-node--ride" transform="translate(924 393)">
-              <circle r="48"/><circle r="35"/><path d="M0-22v44M-22 0h44M-15-15l30 30M15-15l-30 30"/>
-              <text x="0" y="76">Смерч</text><text class="map-node__num" x="0" y="96">03</text>
-            </g>
-
-            <g class="map-node map-node--food" transform="translate(485 375)" tabindex="0" role="button" aria-label="Потенциальная точка F1, отдельный корнер">
-              <circle r="31"/><text x="0" y="7">F1</text><path d="M0 34v24"/>
-            </g>
-            <g class="map-node map-node--food" transform="translate(804 282)" tabindex="0" role="button" aria-label="Потенциальная точка F2, место в общем фуд-корте">
-              <circle r="31"/><text x="0" y="7">F2</text><path d="M0 34v24"/>
-            </g>
-            <g class="map-node map-node--food" transform="translate(694 444)" tabindex="0" role="button" aria-label="Потенциальная точка F3, отдельный корнер">
-              <circle r="31"/><text x="0" y="7">F3</text><path d="M0 34v24"/>
-            </g>
-          </svg>
-
-          <div class="map-opportunities">
-            <article><span>F1</span><div><strong>У первого распределения потока</strong><small>Для импульсных покупок</small></div></article>
-            <article><span>F2</span><div><strong>В центре новой зоны</strong><small>Максимальный контакт с трафиком</small></div></article>
-            <article><span>F3</span><div><strong>У посадочной зоны</strong><small>Для более длинного визита</small></div></article>
+          <div class="story-inlets" aria-label="Входящие потоки">
+            <div><span class="story-entry">Запад</span><span class="story-entry">Север</span><span class="story-entry">Юг</span></div>
+            <strong>Все входящие потоки приводят в экстрим-зону</strong>
           </div>
+
+          <div class="story-grid">
+            <article class="route-story route-story--youth">
+              <header><div><small>Маршрут для</small><h3>Молодёжной компании</h3></div></header>
+              <ol class="story-steps">
+                <li class="story-step story-attraction"><span>Аттракцион</span><strong>Бумеранг</strong><small>Начало маршрута</small></li>
+                <li class="story-step story-food"><span>Food-точка</span><strong>Блинная</strong><small>Рабочая привязка</small></li>
+                <li class="story-step story-attraction"><span>Аттракцион</span><strong>Вихрь</strong><small>Продолжение маршрута</small></li>
+                <li class="story-step story-food"><span>Food-точка</span><strong>Сказочные крылья</strong><small>Рабочая привязка</small></li>
+                <li class="story-step story-attraction"><span>Аттракцион</span><strong>Путь дракона</strong><small>Завершение аттракционов</small></li>
+              </ol>
+              <div class="story-result story-result--food"><span>Завершение маршрута</span><strong>Бургерная + фудкорт</strong></div>
+            </article>
+
+            <article class="route-story route-story--family">
+              <header><div><small>Маршрут для</small><h3>Семьи</h3></div></header>
+              <ol class="story-steps story-steps--family">
+                <li class="story-step story-attraction"><span>Аттракцион</span><strong>Паук</strong><small>Начало маршрута</small></li>
+                <li class="story-step story-food"><span>Food-точка</span><strong>Бум Вафля</strong><small>Рабочая привязка</small></li>
+                <li class="story-step story-food"><span>Food-точка</span><strong>Базилик</strong><small>Рабочая привязка</small></li>
+                <li class="story-step story-attraction"><span>Аттракцион</span><strong>Смерч</strong><small>Завершение аттракционов</small></li>
+              </ol>
+              <div class="story-result story-result--food"><span>Завершение маршрута</span><strong>Общий фудкорт и посадка</strong></div>
+            </article>
+          </div>
+
+          <p class="story-disclaimer">Распределение food-контактов — рабочая коммерческая модель. Финальная последовательность уточняется Парком.</p>
         </div>
       </div>
     </section>
@@ -189,9 +185,9 @@
     <section class="slide slide--attractions" id="attractions" data-chapter="Аттракционы" aria-labelledby="attractions-title">
       <div class="slide-shell">
         <header class="section-heading reveal">
-          <p class="overline">Три магнита трафика</p>
-          <h2 id="attractions-title">Причина приехать.<br><em>И остаться дольше.</em></h2>
-          <p>Подтверждённые характеристики взяты с официального сайта Парка «Сказка». Пропускная способность добавляется из паспортов оборудования.</p>
+          <p class="overline">Состав новой зоны</p>
+          <h2 id="attractions-title">Три аттракциона.<br><em>Три магнита трафика.</em></h2>
+          <p>Публичные характеристики взяты с официального сайта Парка. Вместимость, пропускная способность и прогноз потока заполняются после согласования паспортов и модели трафика.</p>
         </header>
         <div class="ride-grid" id="ride-grid"></div>
       </div>
