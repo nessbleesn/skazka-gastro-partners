@@ -71,6 +71,9 @@ def inspect_page(page, name: str) -> dict:
                 .map((item) => item.textContent.trim())
                 .find((item) => item.includes('Директор по развитию общественного питания')),
             ogImage: document.querySelector('meta[property="og:image"]')?.content,
+            faviconLinks: [...document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]')]
+                .map((item) => ({ rel: item.rel, sizes: item.sizes.value, href: item.getAttribute('href') })),
+            manifestHref: document.querySelector('link[rel="manifest"]')?.getAttribute('href'),
             tinyVisibleText: [...document.querySelectorAll('body *')]
                 .filter((element) => {
                     const style = getComputedStyle(element);
@@ -156,6 +159,13 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["contactName"] == "Алексей Гунько", f"{name}: partner contact name is missing"
     assert result["contactRole"] == "Директор по развитию общественного питания", f"{name}: partner contact role is missing"
     assert result["ogImage"].endswith('/assets/images/og-gastro-partners.png'), f"{name}: branded OG image is missing"
+    assert result["faviconLinks"] == [
+        {"rel": "icon", "sizes": "any", "href": "favicon.ico"},
+        {"rel": "icon", "sizes": "32x32", "href": "assets/images/favicon-32.png"},
+        {"rel": "icon", "sizes": "16x16", "href": "assets/images/favicon-16.png"},
+        {"rel": "apple-touch-icon", "sizes": "180x180", "href": "assets/images/apple-touch-icon.png"},
+    ], f"{name}: browser favicon set is incomplete"
+    assert result["manifestHref"] == "site.webmanifest", f"{name}: web manifest is missing"
     assert not result["tinyVisibleText"], f"{name}: visible text below 10px: {result['tinyVisibleText']}"
     assert result["metricValues"] == ["80+", "4,5 млн", "+35%", "1 200 ₽", "≈72%"], f"{name}: commercial metrics are incorrect"
     assert "Гостевые точки — 1 100 ₽ · точки Парка — ≈1 300 ₽" in result["metricSources"], f"{name}: check breakdown is missing"
