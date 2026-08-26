@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200, initial-scale=1">
+  <title>OG cover — Skazka Gastro Partners</title>
+  <style>
+    @font-face { font-family: "Unbounded"; src: url("../assets/fonts/unbounded-700.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "Onest"; src: url("../assets/fonts/onest-700.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "Mono"; src: url("../assets/fonts/ibm-plex-mono-500.ttf") format("truetype"); font-weight: 500; }
+    * { box-sizing: border-box; }
+    html, body { width: 1200px; height: 630px; margin: 0; overflow: hidden; }
+    body { color: #f7fbfc; background: #03121e; font-family: "Onest", Arial, sans-serif; }
+    .cover { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("../assets/images/boomerang-hero-poster.jpg") center 45% / cover no-repeat;
+      filter: saturate(.9) contrast(1.04);
+      transform: scale(1.015);
+    }
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(3,18,30,.98) 0%, rgba(3,18,30,.92) 42%, rgba(3,18,30,.42) 76%, rgba(3,18,30,.62) 100%),
+        linear-gradient(180deg, rgba(3,18,30,.14), rgba(3,18,30,.8));
+    }
+    .frame { position: absolute; z-index: 2; inset: 0; padding: 52px 60px 48px; }
+    .frame::before { content: ""; position: absolute; left: 0; top: 0; width: 375px; height: 8px; background: #b8e34b; }
+    .frame::after { content: ""; position: absolute; right: 60px; bottom: 0; width: 8px; height: 168px; background: #39b8e3; }
+    .top { display: flex; align-items: center; justify-content: space-between; }
+    .logo { width: 218px; height: auto; display: block; }
+    .eyebrow { font: 500 15px/1.3 "Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.72); }
+    .copy { position: absolute; left: 60px; bottom: 72px; width: 980px; }
+    .status { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 24px; font: 500 15px/1.2 "Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: #9de9ff; }
+    .status::before { content: ""; width: 26px; height: 3px; background: #ff5d50; }
+    h1 { margin: 0; font: 700 54px/.98 "Unbounded", sans-serif; letter-spacing: -.055em; }
+    h1 span { display: block; }
+    h1 span:first-child { white-space: nowrap; }
+    h1 strong { display: block; color: #b8e34b; font-weight: 700; }
+    .footer { position: absolute; z-index: 3; right: 84px; bottom: 55px; max-width: 240px; text-align: right; font: 500 14px/1.45 "Mono", monospace; letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.72); }
+  </style>
+</head>
+<body>
+  <main class="cover" aria-label="Парк Сказка — партнёрская программа">
+    <div class="frame">
+      <div class="top">
+        <img class="logo" src="../assets/images/skazka-logo.png" alt="Парк Сказка">
+        <div class="eyebrow">Партнёрская программа</div>
+      </div>
+      <div class="copy">
+        <div class="status">Экстрим-зона уже открыта</div>
+        <h1><span>Новые аттракционы —</span><strong>новый трафик</strong></h1>
+      </div>
+      <div class="footer">Для ресторанных операторов и гастропроектов</div>
+    </div>
+  </main>
+</body>
+</html>

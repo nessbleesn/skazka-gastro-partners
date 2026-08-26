@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nessbleesn.github.io/skazka-gastro-partners/sitemap.xml
+Sitemap: https://marketing.parkskazka.ru/skazka-gastro-partners/sitemap.xml

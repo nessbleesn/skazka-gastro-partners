@@ -62,6 +62,24 @@ def inspect_page(page, name: str) -> dict:
             leadButtons: document.querySelectorAll('[data-open-form]').length,
             applicationModal: Boolean(document.querySelector('#application-modal')),
             heroTitle: document.querySelector('#intro-title')?.textContent.trim(),
+            heroStatus: document.querySelector('.hero-copy .overline')?.textContent.trim(),
+            hasPendingCopy: document.body.textContent.includes('на согласовании'),
+            contactName: document.querySelector('.join-panel dd')?.textContent.trim(),
+            contactRole: [...document.querySelectorAll('.join-panel dd')]
+                .map((item) => item.textContent.trim())
+                .find((item) => item.includes('Директор по развитию общественного питания')),
+            ogImage: document.querySelector('meta[property="og:image"]')?.content,
+            tinyVisibleText: [...document.querySelectorAll('body *')]
+                .filter((element) => {
+                    const style = getComputedStyle(element);
+                    const rect = element.getBoundingClientRect();
+                    return element.children.length === 0
+                        && element.textContent.trim()
+                        && rect.width > 0
+                        && rect.height > 0
+                        && parseFloat(style.fontSize) < 10;
+                })
+                .map((element) => element.textContent.trim()),
             heroVideo: (() => {
                 const video = document.querySelector('#hero-video');
                 return video ? {
@@ -104,7 +122,7 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
         ["5 м", "6 об/мин", "от 120 см"],
         ["34,8 м", "15 об/мин", "от 140 см"],
     ], f"{name}: final technical facts are incorrect"
-    assert result["routeHeading"] == "Что\nоткрываем", f"{name}: route heading was not rebuilt"
+    assert result["routeHeading"] == "Что\nуже открыто", f"{name}: route heading is outdated"
     assert result["routeSourceLabel"] == "Источник объектов · карта 2026", f"{name}: route source label is missing"
     assert result["routeEntries"] == [], f"{name}: directional inlet labels should be removed"
     assert not result["dataRequest"] and not result["dataModal"], f"{name}: finalization request should be removed"
@@ -118,18 +136,24 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["routeStepCounts"] == [5, 4], f"{name}: route step sequences are incorrect"
     assert result["routeDisclaimer"].startswith("Распределение food-контактов — рабочая коммерческая модель"), f"{name}: working-model disclaimer is missing"
     assert result["mapImages"] == 0, f"{name}: route slide should not display the source map"
-    assert result["rideOperationRows"] == 15, f"{name}: expected 15 attraction planning rows"
+    assert result["rideOperationRows"] == 10, f"{name}: expected 10 confirmed attraction planning rows"
     assert result["rideOperationValues"] == [
-        "20 человек", "590 чел./час", "на согласовании",
-        "20 человек", "600 чел./час", "на согласовании",
-        "16 человек", "480 чел./час", "на согласовании",
-        "24 человека", "480 чел./час", "на согласовании",
-        "56 человек", "1 120 чел./час", "на согласовании",
+        "20 человек", "590 чел./час",
+        "20 человек", "600 чел./час",
+        "16 человек", "480 чел./час",
+        "24 человека", "480 чел./час",
+        "56 человек", "1 120 чел./час",
     ], f"{name}: attraction operating data are incorrect"
     assert not result["missingImages"], f"{name}: missing images {result['missingImages']}"
     assert result["scrollWidth"] <= width + 1, f"{name}: horizontal overflow {result['scrollWidth']} > {width}"
     assert not console_errors, f"{name}: console errors {console_errors}"
     assert "Новые аттракционы" in result["heroTitle"]
+    assert result["heroStatus"] == "Экстрим-зона · уже открыта", f"{name}: hero still presents a future opening"
+    assert not result["hasPendingCopy"], f"{name}: pending copy must not be visible"
+    assert result["contactName"] == "Алексей Гунько", f"{name}: partner contact name is missing"
+    assert result["contactRole"] == "Директор по развитию общественного питания", f"{name}: partner contact role is missing"
+    assert result["ogImage"].endswith('/assets/images/og-gastro-partners.png'), f"{name}: branded OG image is missing"
+    assert not result["tinyVisibleText"], f"{name}: visible text below 10px: {result['tinyVisibleText']}"
     assert result["metricValues"] == ["80+", "4,5 млн", "+35%", "1 200 ₽", "≈72%"], f"{name}: commercial metrics are incorrect"
     assert "Гостевые точки — 1 100 ₽ · точки Парка — ≈1 300 ₽" in result["metricSources"], f"{name}: check breakdown is missing"
     assert result["seasonShares"] == ["75%", "25%"], f"{name}: seasonality split is incorrect"
