@@ -42,7 +42,7 @@
 
   function renderRides() {
     const grid = document.getElementById("ride-grid");
-    grid.innerHTML = data.rides.map((ride) => `
+    grid.innerHTML = data.rides.map((ride, index) => `
       <article class="ride-card reveal">
         <div class="ride-card__media"><img src="${ride.image}" alt="${ride.alt}" loading="eager"><span>${ride.routeLabel}</span></div>
         <div class="ride-card__body">
@@ -52,9 +52,87 @@
           <dl class="ride-card__operations">
             ${ride.operations.map((item) => `<div><dt>${item.label}</dt><dd data-countup>${item.value}</dd></div>`).join("")}
           </dl>
+          <div class="ride-card__action" aria-hidden="true"><span>Открыть карточку</span><b>↗</b></div>
         </div>
+        <button class="ride-card__open" type="button" data-ride-index="${index}" aria-haspopup="dialog" aria-controls="ride-modal" aria-label="Открыть карточку аттракциона ${ride.name}"></button>
       </article>
     `).join("");
+  }
+
+  function setupRideModal() {
+    const modal = document.getElementById("ride-modal");
+    const closeButton = document.getElementById("ride-modal-close");
+    const image = document.getElementById("ride-modal-image");
+    const indexLabel = document.getElementById("ride-modal-index");
+    const route = document.getElementById("ride-modal-route");
+    const title = document.getElementById("ride-modal-title");
+    const summary = document.getElementById("ride-modal-summary");
+    const facts = document.getElementById("ride-modal-facts");
+    const operations = document.getElementById("ride-modal-operations");
+    const source = document.getElementById("ride-modal-source");
+    let lastTrigger = null;
+    let closeTimer = null;
+
+    if (!modal || !closeButton) return;
+
+    const finishClose = () => {
+      if (!modal.open) return;
+      modal.close();
+    };
+
+    const closeModal = () => {
+      if (!modal.open || modal.classList.contains("is-closing")) return;
+      modal.classList.remove("is-visible");
+      modal.classList.add("is-closing");
+      if (reducedMotion.matches) finishClose();
+      else closeTimer = window.setTimeout(finishClose, 260);
+    };
+
+    const openModal = (rideIndex, trigger) => {
+      const ride = data.rides[rideIndex];
+      if (!ride) return;
+
+      if (closeTimer) window.clearTimeout(closeTimer);
+      lastTrigger = trigger;
+      image.src = ride.image;
+      image.alt = ride.alt;
+      indexLabel.textContent = `${String(rideIndex + 1).padStart(2, "0")} / ${String(data.rides.length).padStart(2, "0")}`;
+      route.textContent = ride.routeLabel;
+      title.textContent = ride.name;
+      summary.textContent = ride.summary;
+      facts.innerHTML = ride.facts.map((fact) => `<li data-countup>${fact}</li>`).join("");
+      operations.innerHTML = ride.operations.map((item) => `
+        <div><dt>${item.label}</dt><dd data-countup>${item.value}</dd></div>
+      `).join("");
+      source.textContent = `Источник: ${ride.source}`;
+      modal.classList.remove("is-closing");
+      modal.showModal();
+      document.body.classList.add("has-open-modal");
+      modal.querySelectorAll("[data-countup]").forEach((element) => animateCount(element));
+      requestAnimationFrame(() => modal.classList.add("is-visible"));
+    };
+
+    document.getElementById("ride-grid").addEventListener("click", (event) => {
+      const trigger = event.target.closest(".ride-card__open");
+      if (!trigger) return;
+      openModal(Number(trigger.dataset.rideIndex), trigger);
+    });
+
+    closeButton.addEventListener("click", closeModal);
+    modal.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeModal();
+    });
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+    modal.addEventListener("close", () => {
+      if (closeTimer) window.clearTimeout(closeTimer);
+      closeTimer = null;
+      modal.classList.remove("is-visible", "is-closing");
+      document.body.classList.remove("has-open-modal");
+      if (lastTrigger && document.contains(lastTrigger)) lastTrigger.focus({ preventScroll: true });
+    });
   }
 
   function activateSlide(slide) {
@@ -96,7 +174,7 @@
 
     document.addEventListener("keydown", (event) => {
       const tag = document.activeElement && document.activeElement.tagName;
-      if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return;
+      if (document.querySelector("dialog[open]") || ["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(tag)) return;
       const currentIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
       if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
         event.preventDefault();
@@ -245,6 +323,7 @@
   renderMetrics();
   renderSeasonality();
   renderRides();
+  setupRideModal();
   setupSlideObserver();
   setupNavigation();
   setupFullscreen();

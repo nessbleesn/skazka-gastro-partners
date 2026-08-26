@@ -261,6 +261,24 @@
     </section>
   </main>
 
+  <dialog class="ride-modal" id="ride-modal" aria-labelledby="ride-modal-title" aria-describedby="ride-modal-summary">
+    <div class="ride-modal__panel">
+      <button class="ride-modal__close" id="ride-modal-close" type="button" aria-label="Закрыть карточку аттракциона">×</button>
+      <div class="ride-modal__media">
+        <img id="ride-modal-image" src="assets/images/boomerang.webp" alt="Американские горки Бумеранг в Парке Сказка">
+        <span class="ride-modal__index" id="ride-modal-index" aria-hidden="true"></span>
+      </div>
+      <div class="ride-modal__content">
+        <p class="ride-modal__route" id="ride-modal-route"></p>
+        <h2 id="ride-modal-title"></h2>
+        <p class="ride-modal__summary" id="ride-modal-summary"></p>
+        <ul class="ride-modal__facts" id="ride-modal-facts" aria-label="Ключевые характеристики"></ul>
+        <dl class="ride-modal__operations" id="ride-modal-operations"></dl>
+        <p class="ride-modal__source" id="ride-modal-source"></p>
+      </div>
+    </div>
+  </dialog>
+
   <script src="content.js"></script>
   <script src="app.js"></script>
 </body>

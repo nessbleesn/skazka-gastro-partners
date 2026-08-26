@@ -19,6 +19,8 @@ def inspect_page(page, name: str) -> dict:
             slides: document.querySelectorAll('.slide').length,
             metrics: document.querySelectorAll('.metric-card').length,
             rides: document.querySelectorAll('.ride-card').length,
+            rideOpenButtons: document.querySelectorAll('.ride-card__open').length,
+            rideModal: Boolean(document.querySelector('#ride-modal')),
             rideHeading: document.querySelector('#attractions-title')?.innerText.trim(),
             rideNames: [...document.querySelectorAll('.ride-card h3')]
                 .map((item) => item.textContent.trim()),
@@ -112,6 +114,7 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert result["slides"] == 7, f"{name}: expected 7 slides, got {result}"
     assert result["metrics"] == 5, f"{name}: expected 5 metrics"
     assert result["rides"] == 5, f"{name}: expected 5 ride cards"
+    assert result["rideOpenButtons"] == 5 and result["rideModal"], f"{name}: attraction detail interactions are missing"
     assert result["rideHeading"] == "Пять аттракционов.\nПять магнитов трафика.", f"{name}: attraction heading is outdated"
     assert result["rideNames"] == ["Бумеранг", "Вихрь", "Путь дракона", "Паук", "Смерч"], f"{name}: attraction composition is incorrect"
     assert result["rideRouteLabels"] == ["Молодёжный маршрут"] * 3 + ["Семейный маршрут"] * 2, f"{name}: attraction route labels are incorrect"
@@ -195,6 +198,20 @@ def run_viewport(browser, width: int, height: int, name: str) -> dict:
     assert page.locator(".ride-card").first.evaluate("element => getComputedStyle(element).opacity === '1'"), f"{name}: attraction cards are not visible"
     page.screenshot(path=str(ARTIFACTS / f"{name}-attractions.png"), full_page=False)
     page.locator("#attractions").screenshot(path=str(ARTIFACTS / f"{name}-attractions-section.png"))
+
+    first_ride_trigger = page.locator(".ride-card__open").first
+    first_ride_trigger.click()
+    page.wait_for_timeout(1100)
+    assert page.locator("#ride-modal").get_attribute("open") is not None, f"{name}: attraction modal did not open"
+    assert page.locator("#ride-modal").evaluate("element => element.classList.contains('is-visible')"), f"{name}: attraction modal open state is missing"
+    assert page.locator("#ride-modal-title").inner_text() == "Бумеранг", f"{name}: wrong attraction opened"
+    assert page.locator("#ride-modal-facts li").all_inner_texts() == ["37,451 м", "85,32 км/ч", "303 м трек"], f"{name}: modal technical facts are incorrect"
+    assert page.locator("#ride-modal-operations dd").all_inner_texts() == ["20 человек", "590 чел./час"], f"{name}: modal operating data are incorrect"
+    page.screenshot(path=str(ARTIFACTS / f"{name}-ride-modal.png"), full_page=False)
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(350)
+    assert page.locator("#ride-modal").get_attribute("open") is None, f"{name}: attraction modal did not close"
+    assert page.evaluate("document.activeElement === document.querySelector('.ride-card__open')"), f"{name}: focus did not return to attraction card"
 
     page.locator("#offer").evaluate("element => element.scrollIntoView({block: 'start', behavior: 'instant'})")
     page.wait_for_timeout(1200)
